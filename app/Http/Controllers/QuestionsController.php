@@ -54,7 +54,10 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $question->increment('views'); //view늘리기
+        // $question->view = $question->views + 1;
+        // $question->save();
+        return view('questions.show' , compact('question'));
     }
 
     /**
