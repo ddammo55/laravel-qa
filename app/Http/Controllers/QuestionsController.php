@@ -76,13 +76,6 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(AskQuestionRequest $request, Question $question)
-    {
-        $question->update($request->only('title','body'));
-
-        return redirect('/questions')->with('success','Your question has been updated.');
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -91,6 +84,8 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+       $question->delete();
+
+       return redirect('/questions')->with('success', 'Your question has been deleted.');
     }
 }
