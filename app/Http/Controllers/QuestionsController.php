@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -68,6 +72,8 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
+        //정책 지정
+        $this->authorize("update", $question);
         //dd($question);
         return view('questions.edit', compact('question'));
     }
@@ -79,6 +85,15 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
+    public function update(AskQuestionRequest $request, Question $question)
+    {
+        //정책 지정
+        $this->authorize("update", $question);
+
+        $question->update($request->only('title', 'body'));
+
+        return redirect('/questions')->with('success', "Your question has been updated.");
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -87,6 +102,8 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+       //정책 지정
+       $this->authorize("delete", $question);
        $question->delete();
 
        return redirect('/questions')->with('success', 'Your question has been deleted.');
