@@ -10,7 +10,8 @@ class QuestionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //유저에게만 오류가나면 로그인페이지로 이동
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
     /**
      * Display a listing of the resource.

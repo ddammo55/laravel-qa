@@ -49,5 +49,19 @@ class User extends Authenticatable
         return '#';
     }
 
+    public function answers()
+    {
+        //나는 많이 가지고 있다.  댓글을
+        return $this->hasMany(Answer::class);
+    }
 
+    //아바타속성얻기
+    public function getAvatarAttrubute()
+    {
+        $email = $this->email;
+        $size = 32;
+
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
+
+    }
 }
